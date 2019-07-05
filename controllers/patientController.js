@@ -70,7 +70,23 @@ exports.get = function(req, res) {
     input: Patient
     output: Patient
 */
-exports.put = function(req, res) {};
+exports.put = function(req, res) {
+  Patient.findById(req.params.patient_id, function(err, patient) {
+    if (err) res.send(err);
+    patient.notes = req.body.notes;
+    patient.info = req.body.info;
+    patient.scripts = req.body.scripts;
+    patient.history = req.body.history;
+    patient.allergies = req.body.allergies;
+    patient.save(function(err) {
+      if (err) res.json(err);
+      res.json({
+        message: "Patient Info updated",
+        data: patient
+      });
+    });
+  });
+};
 
 /*
     Protocol: DEL
@@ -78,4 +94,12 @@ exports.put = function(req, res) {};
     input: 
     output:
 */
-exports.delete = function(req, res) {};
+exports.delete = function(req, res) {
+  Patient.deleteOne({ _id: req.params.patient_id }, function(err) {
+    if (err) res.send(err);
+    res.json({
+      status: "success",
+      message: "Patient deleted"
+    });
+  });
+};

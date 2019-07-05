@@ -10,7 +10,6 @@ var infoSchema = mongoose.Schema({
 });
 
 var scriptSchema = mongoose.Schema({
-  id: Number,
   date: String,
   drug: String,
   dosage: String,
@@ -19,21 +18,18 @@ var scriptSchema = mongoose.Schema({
 });
 
 var historySchema = mongoose.Schema({
-  id: Number,
   date: String,
   diagnosis: String,
   diagnoser: String
 });
 
 var allergySchema = mongoose.Schema({
-  id: Number,
   allergy: String,
   reaction: String,
   severity: String
 });
 
 var patientSchema = mongoose.Schema({
-  id: Number,
   notes: String,
   info: infoSchema,
   scripts: [scriptSchema],
