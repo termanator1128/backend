@@ -7,6 +7,8 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+var cors = require("cors");
+app.use(cors());
 let mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/resthub", { useNewUrlParser: true });
 

@@ -12,7 +12,7 @@ exports.post = function(req, res) {
     patient.save(function(err) {
       if (err) res.json(err);
       res.json({
-        message: "New rx created!",
+        status: "success",
         data: patient
       });
     });
@@ -37,7 +37,7 @@ exports.put = function(req, res) {
     patient.save(function(err) {
       if (err) res.json(err);
       res.json({
-        message: "rx changed!",
+        status: "success",
         data: patient
       });
     });
@@ -57,7 +57,7 @@ exports.delete = function(req, res) {
     patient.save(function(err) {
       if (err) res.json(err);
       res.json({
-        message: "rx removed!",
+        status: "success",
         data: patient
       });
     });

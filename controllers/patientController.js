@@ -38,7 +38,7 @@ exports.post = function(req, res) {
   patient.save(function(err) {
     if (err) res.json(err);
     res.json({
-      message: "New patient created!",
+      status: "success",
       data: patient
     });
   });
@@ -59,6 +59,7 @@ exports.get = function(req, res) {
       });
     }
     res.json({
+      status: "success",
       data: patient
     });
   });
@@ -81,7 +82,7 @@ exports.put = function(req, res) {
     patient.save(function(err) {
       if (err) res.json(err);
       res.json({
-        message: "Patient Info updated",
+        status: "success",
         data: patient
       });
     });
@@ -98,8 +99,7 @@ exports.delete = function(req, res) {
   Patient.deleteOne({ _id: req.params.patient_id }, function(err) {
     if (err) res.send(err);
     res.json({
-      status: "success",
-      message: "Patient deleted"
+      status: "success"
     });
   });
 };

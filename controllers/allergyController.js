@@ -11,7 +11,7 @@ exports.post = function(req, res) {
     patient.save(function(err) {
       if (err) res.json(err);
       res.json({
-        message: "New allergy created!",
+        status: "success",
         data: patient
       });
     });
@@ -34,7 +34,7 @@ exports.put = function(req, res) {
     patient.save(function(err) {
       if (err) res.json(err);
       res.json({
-        message: "allergy changed!",
+        status: "success",
         data: patient
       });
     });
@@ -54,7 +54,7 @@ exports.delete = function(req, res) {
     patient.save(function(err) {
       if (err) res.json(err);
       res.json({
-        message: "allergy removed!",
+        status: "success",
         data: patient
       });
     });

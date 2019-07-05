@@ -1,10 +1,4 @@
 let router = require("express").Router();
-router.get("/", function(req, res) {
-  res.json({
-    status: "Good",
-    message: "TODO show available RESTpoints"
-  });
-});
 var patientController = require("../controllers/patientController");
 var rxController = require("../controllers/rxController");
 var historyController = require("../controllers/historyController");
