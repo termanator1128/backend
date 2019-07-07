@@ -1,3 +1,5 @@
+Patient = require("../model/models");
+
 /*
     Protocol: POST
     Route: /patients/:patient_id/allergies
