@@ -8,13 +8,10 @@ Patient = require("../model/models");
 exports.index = function(req, res) {
   Patient.get(function(err, patients) {
     if (err) {
-      res.json({
-        status: "error",
-        message: err
-      });
+      next(err);
     }
     res.json({
-      status: "success",
+      success: true,
       message: "Patients retrieved successfully",
       data: patients
     });
@@ -36,9 +33,12 @@ exports.post = function(req, res) {
   patient.allergies = req.body.allergies;
 
   patient.save(function(err) {
-    if (err) res.json(err);
+    if (err) {
+      next(err);
+    }
     res.json({
-      status: "success",
+      success: true,
+      message: "Patient created successfully",
       data: patient
     });
   });
@@ -53,13 +53,11 @@ exports.post = function(req, res) {
 exports.get = function(req, res) {
   Patient.findById(req.params.patient_id, function(err, patient) {
     if (err) {
-      res.json({
-        status: "error",
-        message: err
-      });
+      next(err);
     }
     res.json({
-      status: "success",
+      success: true,
+      message: "Patient retrieved successfully",
       data: patient
     });
   });
@@ -73,16 +71,21 @@ exports.get = function(req, res) {
 */
 exports.put = function(req, res) {
   Patient.findById(req.params.patient_id, function(err, patient) {
-    if (err) res.send(err);
+    if (err) {
+      next(err);
+    }
     patient.notes = req.body.notes;
     patient.info = req.body.info;
     patient.scripts = req.body.scripts;
     patient.history = req.body.history;
     patient.allergies = req.body.allergies;
     patient.save(function(err) {
-      if (err) res.json(err);
+      if (err) {
+        next(err);
+      }
       res.json({
-        status: "success",
+        success: true,
+        message: "Patient updated successfully",
         data: patient
       });
     });
@@ -97,9 +100,12 @@ exports.put = function(req, res) {
 */
 exports.delete = function(req, res) {
   Patient.deleteOne({ _id: req.params.patient_id }, function(err) {
-    if (err) res.send(err);
+    if (err) {
+      next(err);
+    }
     res.json({
-      status: "success"
+      success: true,
+      message: "Patient deleted successfully"
     });
   });
 };

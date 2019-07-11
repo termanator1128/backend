@@ -1,35 +1,24 @@
-/*
-Credit to Naren Yellavula
-source:
-https://medium.com/dev-bits/a-guide-for-adding-jwt-token-based-authentication-to-your-single-page-nodejs-applications-c403f7cf04f4
-*/
-
-let jwt = require("jsonwebtoken");
+var request = require("request");
 
 let checkToken = (req, res, next) => {
   let token = req.headers["x-access-token"] || req.headers["authorization"];
-
-  if (token) {
-    if (token.startsWith("Bearer ")) {
-      token = token.slice(7, token.length);
-    }
-    jwt.verify(token, process.env.SECRET, (err, decoded) => {
-      if (err) {
+  request.post(
+    {
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      url: "https://auth.aleinin.com/verify",
+      body: `token=${token}`
+    },
+    function(error, response, body) {
+      const info = JSON.parse(body);
+      if (!info.success) {
         return res.json({
-          success: false,
-          message: "Token is not valid"
+          success: info.success,
+          message: info.message
         });
-      } else {
-        req.decoded = decoded;
-        next();
       }
-    });
-  } else {
-    return res.json({
-      success: false,
-      message: "Auth token is not supplied"
-    });
-  }
+      next();
+    }
+  );
 };
 
 module.exports = {

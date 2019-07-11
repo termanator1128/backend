@@ -7,12 +7,17 @@ Patient = require("../model/models");
 */
 exports.post = function(req, res) {
   Patient.findById(req.params.patient_id, function(err, patient) {
-    if (err) res.send(err);
+    if (err) {
+      next(err);
+    }
     patient.scripts.push(req.body);
     patient.save(function(err) {
-      if (err) res.json(err);
+      if (err) {
+        next(err);
+      }
       res.json({
-        status: "success",
+        success: true,
+        message: "Rx created succesfully",
         data: patient
       });
     });
@@ -27,7 +32,9 @@ exports.post = function(req, res) {
 */
 exports.put = function(req, res) {
   Patient.findById(req.params.patient_id, function(err, patient) {
-    if (err) res.send(err);
+    if (err) {
+      next(err);
+    }
     let rx = patient.scripts.id(req.params.script_id);
     rx.date = req.body.date;
     rx.drug = req.body.drug;
@@ -35,9 +42,12 @@ exports.put = function(req, res) {
     rx.reason = req.body.reason;
     rx.prescriber = req.body.prescriber;
     patient.save(function(err) {
-      if (err) res.json(err);
+      if (err) {
+        next(err);
+      }
       res.json({
-        status: "success",
+        success: true,
+        message: "Rx updated succesfully",
         data: patient
       });
     });
@@ -52,12 +62,17 @@ exports.put = function(req, res) {
 */
 exports.delete = function(req, res) {
   Patient.findById(req.params.patient_id, function(err, patient) {
-    if (err) res.send(err);
+    if (err) {
+      next(err);
+    }
     patient.scripts.id(req.params.script_id).remove();
     patient.save(function(err) {
-      if (err) res.json(err);
+      if (err) {
+        next(err);
+      }
       res.json({
-        status: "success",
+        success: true,
+        message: "Rx deleted succesfully",
         data: patient
       });
     });

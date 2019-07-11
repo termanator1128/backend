@@ -34,4 +34,5 @@ router
   .route("/patients/:patient_id/allergies/:allergy_id")
   .put(allergyController.put)
   .delete(allergyController.delete);
+
 module.exports = router;

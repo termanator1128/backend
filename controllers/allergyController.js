@@ -8,12 +8,17 @@ Patient = require("../model/models");
 */
 exports.post = function(req, res) {
   Patient.findById(req.params.patient_id, function(err, patient) {
-    if (err) res.send(err);
+    if (err) {
+      next(err);
+    }
     patient.allergies.push(req.body);
     patient.save(function(err) {
-      if (err) res.json(err);
+      if (err) {
+        next(err);
+      }
       res.json({
-        status: "success",
+        success: true,
+        message: "Allergy created succesfully",
         data: patient
       });
     });
@@ -28,15 +33,20 @@ exports.post = function(req, res) {
 */
 exports.put = function(req, res) {
   Patient.findById(req.params.patient_id, function(err, patient) {
-    if (err) res.send(err);
+    if (err) {
+      next(err);
+    }
     let allergy = patient.allergies.id(req.params.allergy_id);
     allergy.allergy = req.body.allergy;
     allergy.reaction = req.body.reaction;
     allergy.severity = req.body.severity;
     patient.save(function(err) {
-      if (err) res.json(err);
+      if (err) {
+        next(err);
+      }
       res.json({
-        status: "success",
+        success: true,
+        message: "Allergy updated succesfully",
         data: patient
       });
     });
@@ -51,12 +61,17 @@ exports.put = function(req, res) {
 */
 exports.delete = function(req, res) {
   Patient.findById(req.params.patient_id, function(err, patient) {
-    if (err) res.send(err);
+    if (err) {
+      next(err);
+    }
     patient.allergies.id(req.params.allergy_id).remove();
     patient.save(function(err) {
-      if (err) res.json(err);
+      if (err) {
+        next(err);
+      }
       res.json({
-        status: "success",
+        success: true,
+        message: "Allergy deleted succesfully",
         data: patient
       });
     });
